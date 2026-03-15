@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: datapulse
+
+influxdb:
+  url: ${INFLUXDB_URL:http://localhost:8086}
+  token: ${INFLUXDB_TOKEN:datapulse-dev-token}
+  org: ${INFLUXDB_ORG:datapulse}
+  bucket: ${INFLUXDB_BUCKET:telegraf}
+
+security:
+  jwt:
+    secret: ${JWT_SECRET:datapulse-dev-secret-key-change-in-production-min-32-chars}
+    expiration-ms: 3600000
+    refresh-expiration-ms: 86400000
+
+auth:
+  username: ${AUTH_USERNAME:admin}
+  password: ${AUTH_PASSWORD:admin}
+
+dashboards:
+  storage-path: ${DASHBOARDS_PATH:data/dashboards}

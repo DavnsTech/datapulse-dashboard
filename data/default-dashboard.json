@@ -1,0 +1,78 @@
+{
+  "id": "default",
+  "name": "System & Business Overview",
+  "panels": [
+    {
+      "id": "p1",
+      "title": "CPU Usage",
+      "chartType": "area",
+      "measurement": "cpu",
+      "field": "usage_idle",
+      "aggregation": "mean",
+      "grid": { "x": 0, "y": 0, "width": 6, "height": 4 }
+    },
+    {
+      "id": "p2",
+      "title": "Memory Usage",
+      "chartType": "area",
+      "measurement": "mem",
+      "field": "used_percent",
+      "aggregation": "mean",
+      "grid": { "x": 6, "y": 0, "width": 6, "height": 4 }
+    },
+    {
+      "id": "p3",
+      "title": "Active Users",
+      "chartType": "line",
+      "measurement": "business_metrics",
+      "field": "active_users",
+      "aggregation": "mean",
+      "grid": { "x": 0, "y": 4, "width": 6, "height": 4 }
+    },
+    {
+      "id": "p4",
+      "title": "API Requests/sec",
+      "chartType": "bar",
+      "measurement": "business_metrics",
+      "field": "api_requests",
+      "aggregation": "mean",
+      "grid": { "x": 6, "y": 4, "width": 6, "height": 4 }
+    },
+    {
+      "id": "p5",
+      "title": "Error Rate",
+      "chartType": "line",
+      "measurement": "business_metrics",
+      "field": "error_rate",
+      "aggregation": "mean",
+      "grid": { "x": 0, "y": 8, "width": 6, "height": 4 }
+    },
+    {
+      "id": "p6",
+      "title": "Revenue Daily",
+      "chartType": "area",
+      "measurement": "business_metrics",
+      "field": "revenue_daily",
+      "aggregation": "mean",
+      "grid": { "x": 6, "y": 8, "width": 6, "height": 4 }
+    },
+    {
+      "id": "p7",
+      "title": "Disk Usage",
+      "chartType": "area",
+      "measurement": "disk",
+      "field": "used_percent",
+      "aggregation": "last",
+      "grid": { "x": 0, "y": 12, "width": 6, "height": 4 }
+    },
+    {
+      "id": "p8",
+      "title": "Network Throughput",
+      "chartType": "line",
+      "measurement": "net",
+      "field": "bytes_recv",
+      "aggregation": "mean",
+      "grid": { "x": 6, "y": 12, "width": 6, "height": 4 }
+    }
+  ]
+}

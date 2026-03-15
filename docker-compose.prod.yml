@@ -1,0 +1,52 @@
+services:
+  influxdb:
+    image: influxdb:2.7
+    restart: unless-stopped
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUXDB_USERNAME:-admin}
+      DOCKER_INFLUXDB_INIT_PASSWORD: ${INFLUXDB_PASSWORD:-datapulse123}
+      DOCKER_INFLUXDB_INIT_ORG: ${INFLUXDB_ORG:-datapulse}
+      DOCKER_INFLUXDB_INIT_BUCKET: ${INFLUXDB_BUCKET:-telegraf}
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_TOKEN:-datapulse-dev-token}
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
+
+  telegraf:
+    image: telegraf:1.31
+    restart: unless-stopped
+    depends_on:
+      - influxdb
+    volumes:
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ./telegraf/scripts:/etc/telegraf/scripts:ro
+    environment:
+      INFLUXDB_URL: http://influxdb:8086
+      INFLUXDB_TOKEN: ${INFLUXDB_TOKEN:-datapulse-dev-token}
+      INFLUXDB_ORG: ${INFLUXDB_ORG:-datapulse}
+      INFLUXDB_BUCKET: ${INFLUXDB_BUCKET:-telegraf}
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - influxdb
+    environment:
+      INFLUXDB_URL: http://influxdb:8086
+      INFLUXDB_TOKEN: ${INFLUXDB_TOKEN:-datapulse-dev-token}
+      INFLUXDB_ORG: ${INFLUXDB_ORG:-datapulse}
+      INFLUXDB_BUCKET: ${INFLUXDB_BUCKET:-telegraf}
+      JWT_SECRET: ${JWT_SECRET:-change-this-in-production-min-32-characters-long}
+      AUTH_USERNAME: ${AUTH_USERNAME:-admin}
+      AUTH_PASSWORD: ${AUTH_PASSWORD:-admin}
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+
+volumes:
+  influxdb-data:
